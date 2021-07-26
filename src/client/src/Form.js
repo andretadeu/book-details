@@ -27,11 +27,10 @@ class Form extends Component {
     try {
       const response = fetch("http://localhost:8080/graphql", {
         method: 'POST',
-        mode: 'no-cors',
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
         body: '{"query": "mutation BookInput($bIsbn: String!, $bTitle: String!, $bPageCount: Int!) ' +
             '{ insert(isbn: $bIsbn, title: $bTitle, pageCount: $bPageCount) }", "variables": ' +
-            '{"bIsbn": "' + this.state.isbn + '", "bTitle": "' + this.state.title + '", "bPageCount": ' +
+            '{"bIsbn": "' + this.state.isbn + '", "bTitle": "' + this.state.bookTitle + '", "bPageCount": ' +
             this.state.pageCount + '}}',
       }).then(result => result.json())
           .then(result => this.setState({data: result}));

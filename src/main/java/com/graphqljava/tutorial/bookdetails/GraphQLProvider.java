@@ -6,6 +6,7 @@ import graphql.schema.idl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
@@ -17,6 +18,7 @@ import java.nio.file.Files;
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
 @Component
+@CrossOrigin(origins = "localhost:8080")
 public class GraphQLProvider {
 
     private GraphQL graphQL;
