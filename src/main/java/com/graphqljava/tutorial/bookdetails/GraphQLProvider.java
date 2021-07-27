@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
@@ -32,12 +28,16 @@ public class GraphQLProvider {
     }
 
     @PostConstruct
-    public void init() throws IOException, URISyntaxException {
-        URL url = this.getClass().getClassLoader().getResource("schema.graphqls");
-        if (url != null) {
-            StringBuilder bldr = new StringBuilder();
-            Files.readAllLines(new File(url.toURI()).toPath(), StandardCharsets.UTF_8)
-                    .forEach(bldr::append);
+    public void init() throws IOException {
+        StringBuilder bldr = new StringBuilder();
+        final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("schema.graphqls");
+        if (inputStream != null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    bldr.append(line);
+                }
+            }
             GraphQLSchema graphQLSchema = buildSchema(bldr.toString());
             this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
         }

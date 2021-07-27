@@ -10,10 +10,11 @@ Firstly, we should use Docker Compose to run PostgreSQL container:
 docker-compose up -d
 ```
 
-then, run the following command:
+then, run the following commands:
 
 ```shell
-
+gradle clean build
+java -jar build/libs/book-details-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=local
 ```
 
 finally, run the cURL command to test:
@@ -29,3 +30,13 @@ curl 'http://localhost:8080/graphql' -H 'Content-Type: application/json' -H 'Acc
 ```
 
 for the retrieve.
+
+## In Progress
+
+There is a simple React application form to insert data using this backend. You must have the latest Node LTS version.
+To start it, please do:
+
+```shell
+cd src/client
+npm start
+```
